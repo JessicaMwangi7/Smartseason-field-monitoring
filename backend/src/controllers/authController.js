@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { getDb } = require('../models/db');
 const { JWT_SECRET } = require('../config/jwt');
 
-async function login(req, res) {
+async function login(req, re) {
   const { email, password } = req.body;
   if (!email || !password)
     return res.status(400).json({ error: 'Email and password required' });
