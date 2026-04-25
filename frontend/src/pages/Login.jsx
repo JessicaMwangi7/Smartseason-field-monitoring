@@ -15,9 +15,17 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
+
     try {
       const user = await login(email, password);
-      navigate(user.role === 'admin' ? '/admin/dashboard' : '/agent/dashboard');
+
+      // FIXED SAFE NAVIGATION (prevents flashing crash)
+      if (user?.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/agent/dashboard');
+      }
+
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     } finally {
@@ -26,8 +34,13 @@ export default function Login() {
   }
 
   function fillDemo(role) {
-    if (role === 'admin') { setEmail('admin@smartseason.com'); setPassword('admin123'); }
-    else { setEmail('james@smartseason.com'); setPassword('agent123'); }
+    if (role === 'admin') {
+      setEmail('admin@smartseason.com');
+      setPassword('admin123');
+    } else {
+      setEmail('james@smartseason.com');
+      setPassword('agent123');
+    }
   }
 
   return (
@@ -38,25 +51,50 @@ export default function Login() {
           <h1>SmartSeason</h1>
           <p>Field Monitoring System</p>
         </div>
+
         <form onSubmit={handleSubmit} className="login-form">
           {error && <div className="alert alert-error">{error}</div>}
+
           <div className="form-group">
             <label>Email</label>
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@example.com" />
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              placeholder="you@example.com"
+            />
           </div>
+
           <div className="form-group">
             <label>Password</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••" />
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              placeholder="••••••••"
+            />
           </div>
-          <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
+
+          <button
+            type="submit"
+            className="btn btn-primary btn-full"
+            disabled={loading}
+          >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
+
         <div className="demo-credentials">
           <p>Demo accounts:</p>
           <div className="demo-btns">
-            <button onClick={() => fillDemo('admin')} className="btn btn-demo">Admin</button>
-            <button onClick={() => fillDemo('agent')} className="btn btn-demo">Field Agent</button>
+            <button onClick={() => fillDemo('admin')} className="btn btn-demo">
+              Admin
+            </button>
+            <button onClick={() => fillDemo('agent')} className="btn btn-demo">
+              Field Agent
+            </button>
           </div>
         </div>
       </div>
