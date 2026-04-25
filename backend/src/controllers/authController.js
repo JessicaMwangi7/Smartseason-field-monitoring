@@ -6,7 +6,7 @@ const { JWT_SECRET } = require('../config/jwt');
 async function login(req, res) {
   const { email, password } = req.body;
   if (!email || !password)
-    return res.status(400).json({ error: 'Email and password required' });
+    return res.status(40).json({ error: 'Email and password required' });
 
   const db = getDb();
   const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
