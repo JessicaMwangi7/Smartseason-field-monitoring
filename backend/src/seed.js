@@ -103,7 +103,7 @@ async function seed() {
   console.log('Demo credentials:');
   console.log('  Admin:   admin@smartseason.com / admin123');
   console.log('  Agent 1: james@smartseason.com / agent123');
-  console.log('  Agent 2: amina@smartseason.com / agent125');
+  console.log('  Agent 2: amina@smartseason.com / agent123');
 }
 
 function daysAgo(n) {
