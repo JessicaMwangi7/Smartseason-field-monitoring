@@ -1,0 +1,23 @@
+/* ── Dashboard sections ─────────────────────── */
+.dashboard-section { margin-bottom: 32px; }
+
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.section-title {
+  font-size: 1rem; font-weight: 700; color: var(--grey-800);
+  margin-bottom: 14px;
+}
+.section-title.risk-title { color: var(--amber-600); }
+.section-note { font-size: 0.82rem; color: var(--grey-500); margin-bottom: 12px; margin-top: -10px; }
+.section-link { font-size: 0.82rem; color: var(--green-600); font-weight: 600; }
+.section-link:hover { text-decoration: underline; }
+
+/* Stage breakdown bar chart */
+.stage-breakdown { display: flex; flex-direction: column; gap: 10px; }
+.stage-row { display: flex; align-items: center; gap: 12px; }
+.stage-label { font-size: 0.82rem; font-weight: 600; color: var(--grey-700); width: 72px; flex-shrink: 0; }
+.stage-bar-wrap { flex: 1; background: var(--grey-100); border-radius: 4px; height: 10px; overflow: hidden; }
+.stage-bar { height: 100%; background: linear-gradient(90deg, var(--green-500), var(--green-400)); border-radius: 4px; transition: width 0.4s ease; min-width: 4px; }
+.stage-count { font-size: 0.82rem; font-weight: 700; color: var(--grey-700); width: 20px; text-align: right; flex-shrink: 0; }
