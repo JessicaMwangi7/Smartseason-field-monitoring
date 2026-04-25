@@ -2,7 +2,41 @@
 
 A full-stack web application for tracking crop progress across multiple fields during a growing season.
 
-🚀 Demo Credentials
+🚀 Quick Start
+Prerequisites
+Node.js (v18+)
+npm (v9+)
+
+
+Installation
+1. Clone the repository
+git clone <repo-url>
+cd smartseason
+
+
+2. Backend Setup
+cd backend
+npm install
+node src/seed.js   # Initialize database with demo data
+npm run dev
+
+Backend runs on:
+
+http://localhost:5000
+
+
+3. Frontend Setup
+cd frontend
+npm install
+npm start
+
+Frontend runs on:
+
+http://localhost:3000
+
+
+🔐 Demo Credentials
+
 Role	Email	Password
 Admin	admin@smartseason.com
 	admin123
@@ -11,84 +45,84 @@ Field Agent	james@smartseason.com
 Field Agent	amina@smartseason.com
 	agent123
 
-🛠 Tech Stack
-Backend: Node.js, Express.js
-Database: SQLite (better-sqlite3)
-Auth: JWT, bcrypt
 
-Frontend: React 18, React Router
-HTTP Client: Axios
-Styling: Custom CSS (no UI framework)
+🏗 Architecture
 
-SQLite was used for simplicity and portability. Can be swapped with PostgreSQL/MySQL.
+Frontend (React)
+React 18
+React Router
+Axios
+Custom CSS (no UI library)
+Context API for state management
+
+
+Backend (Node.js)
+Express.js
+SQLite (better-sqlite3)
+JWT Authentication
+bcrypt for password hashing
+
+
+🌱 Core Features
+Role-based access control (Admin & Field Agents)
+Secure authentication with JWT
+Field tracking (stage, notes, updates)
+Dynamic field status (Active / At Risk / Completed)
+Admin dashboard for full management
+Agent dashboard for assigned fields only
+
+
+🧠 Design Decisions
+SQLite database for zero setup complexity
+Computed field status (always recalculated, never stored)
+Role-based API security enforced in middleware
+Single update endpoint with role-aware permissions
+Custom CSS UI for full control and flexibility
+
 
 📁 Project Structure
 smartseason/
-├── backend/   → Express API, auth, database, seed data
-└── frontend/  → React app (admin + agent dashboards)
+├── backend/
+│   └── src/
+│       ├── controllers/
+│       ├── models/
+│       ├── routes/
+│       └── middleware/
+│
+└── frontend/
+    └── src/
+        ├── components/
+        ├── pages/
+        ├── contexts/
+        ├── styles/
+        └── utils/
 
-⚙️ Setup Instructions
-1. Clone Repo
-git clone <repo-url>
-cd smartseason
-
-2. Backend
-cd backend
-npm install
-node src/seed.js
-npm run dev
-
-Runs on: http://localhost:5000
-
-3. Frontend
-cd frontend
-npm install
-npm start
-
-Runs on: http://localhost:3000
-
-🔐 Key Features
-Role-based access (Admin & Field Agents)
-JWT authentication system
-Field tracking (stage, notes, status)
-Dynamic “At Risk” logic based on crop timelines
-Admin dashboard for full field management
-Agent dashboard for assigned fields only
-
-🧠 Design Decisions
-Computed field status (not stored) to avoid stale data
-Role-based API protection (server-enforced)
-Single PATCH endpoint with role-aware updates
-SQLite chosen for zero setup complexity
-Custom CSS UI to demonstrate frontend control
-
-🌱 Field Status Logic
-
-Fields are automatically classified as:
-
-Active
-At Risk
-Completed
-
-Based on crop stage + time since planting.
 
 📌 Assumptions
-One field → one agent
-Only admins can create/delete fields
+
+Each field is assigned to one agent
+Only admins can create or delete fields
 Agents can only update assigned fields
-App runs locally (no deployment config included)
+Application runs locally (no production deployment included)
+
 
 🚀 Future Improvements
-Email alerts for “At Risk” fields
-Map-based field tracking (Leaflet)
-File/photo uploads for field reports
+Email notifications for “At Risk” fields
+Map-based field visualization (Leaflet integration)
+Photo uploads for field reports
 Export reports (CSV/PDF)
+
 
 ⭐ Summary
 
 SmartSeason demonstrates:
 
 Full-stack CRUD architecture
-Secure authentication system
+Secure JWT authentication system
 Role-based backend design
 Real-world agricultural workflow modeling
+Clean separation of frontend and backend concerns
+
+🔥 End Result
+
+A functional, scalable field monitoring system designed to simulate real-world agricultural operations with modern web technologies.
