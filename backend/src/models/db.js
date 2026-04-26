@@ -1,20 +1,27 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
 
-const DB_PATH = path.join(__dirname, '../../smartseason.db');
+// Use Railway volume in production, local file in dev
+const DB_PATH = process.env.NODE_ENV === 'production'
+  ? '/data/smartseason.db'
+  : path.join(__dirname, '../../smartseason.db');
+
+// Ensure directory exists (for /data on Railway)
+const dbDir = path.dirname(DB_PATH);
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
 
 let db;
 
 function getDb() {
   if (!db) {
+    console.log(`Opening database at: ${DB_PATH}`);
     db = new Database(DB_PATH);
-
-    // Performance + safety
     db.pragma('journal_mode = WAL');
     db.pragma('foreign_keys = ON');
-
     initSchema();
-    seedUsers(); // 👈 ensure users exist
   }
   return db;
 }
@@ -57,25 +64,6 @@ function initSchema() {
       FOREIGN KEY (agent_id) REFERENCES users(id)
     );
   `);
-}
-
-//
-// 🌱 SEED USERS (CRITICAL FOR LOGIN)
-//
-function seedUsers() {
-  const existing = db.prepare("SELECT COUNT(*) as count FROM users").get();
-
-  if (existing.count === 0) {
-    const insert = db.prepare(`
-      INSERT INTO users (name, email, password, role)
-      VALUES (?, ?, ?, ?)
-    `);
-
-    insert.run("Admin User", "admin@test.com", "123456", "admin");
-    insert.run("Field Agent", "agent@test.com", "123456", "agent");
-
-    console.log("🌱 Seeded default users");
-  }
 }
 
 module.exports = { getDb };

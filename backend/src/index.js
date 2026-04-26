@@ -11,10 +11,10 @@ const allowedOrigins = [
   'https://smartseason-field-monitoring-drab.vercel.app'
 ];
 
-// CORS middleware (FIXED)
+// CORS middleware
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like Postman or server-to-server)
+    // allow requests with no origin (Postman, server-to-server, health checks)
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
@@ -51,7 +51,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🌱 SmartSeason API running on port ${PORT}`);
-});
+// Auto-seed on startup, then start server
+const seed = require('./seed');
+seed()
+  .catch(err => console.error('Startup seed error:', err.message))
+  .finally(() => {
+    app.listen(PORT, () => {
+      console.log(`🌱 SmartSeason API running on port ${PORT}`);
+    });
+  });

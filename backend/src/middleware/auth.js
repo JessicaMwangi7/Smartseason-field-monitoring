@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const { JWT_SECRET } = require('../config/jwt');
 //
-// 🔐 AUTHENTICATE USER (VERIFY TOKEN)
+//  AUTHENTICATE USER (VERIFY TOKEN)
 //
 function authenticate(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -26,7 +26,7 @@ function authenticate(req, res, next) {
 }
 
 //
-// 👑 ADMIN ONLY
+//  ADMIN ONLY
 //
 function requireAdmin(req, res, next) {
   if (!req.user || req.user.role !== 'admin') {
@@ -36,7 +36,7 @@ function requireAdmin(req, res, next) {
 }
 
 //
-// 👨‍🌾 AGENT OR ADMIN
+//  AGENT OR ADMIN
 //
 function requireAgent(req, res, next) {
   if (!req.user || !['admin', 'agent'].includes(req.user.role)) {
@@ -46,7 +46,7 @@ function requireAgent(req, res, next) {
 }
 
 //
-// 🎫 GENERATE TOKEN (IMPORTANT ADD)
+//   GENERATE TOKEN (IMPORTANT ADD)
 //
 function generateToken(user) {
   return jwt.sign(
